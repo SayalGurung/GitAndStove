@@ -3,86 +3,117 @@ public class Burner{
 enum Temperature {
 BLAZING, HOT, WARM, COLD}
 
-private Temperature MyTemperature;
-private Setting MySetting;
-private int Timer; 
+private Temperature myTemperature;
+private Setting mySetting;
+private int timer; 
 public static final int TIME_DURATION = 2;
 
-public Temperature get() {
-    return MyTemperature;
+public Temperature getMyTemperature() {
+    return myTemperature;
 }
 
 public Burner() {
-    MyTemperature = Temperature.COLD;
-    MySetting = Setting.OFF;
-    Timer = TIME_DURATION; 
+    myTemperature = Temperature.COLD;
+    mySetting = Setting.OFF;
+    timer = 0; 
 
 }
 
 
 public void plusButton(){
-    switch (MySetting) {
+    switch (mySetting) {
         case OFF:
-            MySetting = Setting.LOW;
+            mySetting = Setting.LOW;
             break;
         case LOW:
-            MySetting = Setting.MEDIUM;
+            mySetting = Setting.MEDIUM;
             break;
         case MEDIUM:
-            MySetting = Setting.HIGH;
+            mySetting = Setting.HIGH;
             break;
         case HIGH:
-            MySetting = Setting.HIGH;
             break;
         default:
             System.out.println("ERROR");
             break;
     }
+    timer = TIME_DURATION; //reset the timer to 2 seconds
+
 }
 
 public void minusButton()
 {
-    switch (MySetting) {
+    switch (mySetting) {
         case OFF:
-            MySetting = Setting.OFF;
+            mySetting = Setting.OFF;
             break;
         case LOW:
-            MySetting = Setting.OFF;
+            mySetting = Setting.OFF;
             break;
         case MEDIUM:
-            MySetting = Setting.LOW;
+            mySetting = Setting.LOW;
             break;
         case HIGH:
-            MySetting = Setting.MEDIUM;
+            mySetting = Setting.MEDIUM;
             break;
         default:
             System.out.println("ERROR");
             break;
     }
-
+    timer = TIME_DURATION; // reset the timer to 2 seconds
 }
 
 public void updateTemperature(){
+    if (timer > 0) { //sits out and decrement the timer until it reaches 0
+          timer --;
 
+              if (timer == 0) {
+                switch (mySetting) {
+                    case OFF:
+                        myTemperature = Temperature.COLD;
+                        break;
+                    case LOW:
+                        myTemperature = Temperature.WARM;
+                        break;
+                    case MEDIUM:
+                        myTemperature = Temperature.HOT;
+                        break;
+                    case HIGH:
+                        myTemperature = Temperature.BLAZING;
+                        break;
+                    default:
+                        System.out.println("ERROR");
+                        break;
+                }
+    }
+
+    
+}
+//does nothing  when the timer is greater than 0, the temperature remains the same until the timer reaches 0
 }
 
-
 public void display() {
-    switch (MyTemperature) {
+    String temp;
+
+    switch (myTemperature) {
         case COLD:
-            System.out.println("[---].....cooool");
+            temp = ".....cooool";
+            System.out.println("[" + mySetting + "]" + temp);
             break;
         case WARM:
-            System.out.println("[--+].....warm");
+            temp = ".....warm";
+            System.out.println("[" + mySetting + "]" + temp);
             break;
         case HOT:
-            System.out.println("[-++].....CAREFUL");
+            temp = ".....CAREFUL";
+            System.out.println("[" + mySetting + "]" + temp);
             break;
         case BLAZING:
-            System.out.println("[+++].....VERY HOT! DON'T TOUCH");
+            temp = ".....VERY HOT! DON'T TOUCH";
+            System.out.println("[" + mySetting + "]" + temp);
             break;
         default:
-            System.out.println("[???].....SOMETHING IS WRONG CHECK BREAKER(CODE)");
+            System.out.println("[ERROR] Invalid temperature");
             break;
     }
 }
