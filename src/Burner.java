@@ -1,6 +1,6 @@
 public class Burner{ 
 
-enum Temperature {
+public enum Temperature {
 BLAZING, HOT, WARM, COLD}
 
 private Temperature myTemperature;
@@ -12,7 +12,7 @@ public Temperature getMyTemperature() {
     return myTemperature;
 }
 
-public Burner() {
+public Burner() { //constructor
     myTemperature = Temperature.COLD;
     mySetting = Setting.OFF;
     timer = 0; 
@@ -60,36 +60,45 @@ public void minusButton()
             System.out.println("ERROR");
             break;
     }
-    timer = TIME_DURATION; // reset the timer to 2 seconds
+    timer = TIME_DURATION; // reset the timer to 2 min
 }
 
-public void updateTemperature(){
-    if (timer > 0) { //sits out and decrement the timer until it reaches 0
-          timer --;
+public void updateTemperature() {
+    if (timer > 0) {
+        timer--;                                   // one minute passed, decrement the timer
 
-              if (timer == 0) {
-                switch (mySetting) {
-                    case OFF:
-                        myTemperature = Temperature.COLD;
-                        break;
-                    case LOW:
-                        myTemperature = Temperature.WARM;
-                        break;
-                    case MEDIUM:
-                        myTemperature = Temperature.HOT;
-                        break;
-                    case HIGH:
-                        myTemperature = Temperature.BLAZING;
-                        break;
-                    default:
-                        System.out.println("ERROR");
-                        break;
-                }
+        if (timer == 0) {                        
+            Temperature target;                    
+
+            switch (mySetting) {
+                case OFF:
+                    target = Temperature.COLD;
+                    break;
+                case LOW:
+                    target = Temperature.WARM;
+                    break;
+                case MEDIUM:
+                    target = Temperature.HOT;
+                    break;
+                case HIGH:
+                    target = Temperature.BLAZING;
+                    break;
+                default:
+                    target = myTemperature;        
+                    break;
+            }
+
+            if (myTemperature.ordinal() > target.ordinal()) {//ordinal returns the position of the enumn constant. kinda like index.
+                myTemperature = Temperature.values()[myTemperature.ordinal() - 1];
+            } else if (myTemperature.ordinal() < target.ordinal()) {
+                myTemperature = Temperature.values()[myTemperature.ordinal() + 1];
+            }
+
+            if (myTemperature != target) {
+                timer = TIME_DURATION;
+            }
+        }
     }
-
-    
-}
-//does nothing  when the timer is greater than 0, the temperature remains the same until the timer reaches 0
 }
 
 public void display() {
