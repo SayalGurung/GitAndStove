@@ -1,14 +1,14 @@
 public enum Setting {
     OFF("---"), LOW("--+"), MEDIUM("-++"), HIGH("+++");
 
-    private String Status;
+    private String status;
 
-    Setting (String Status) {
-        this.Status = Status;
+    Setting (String status) {
+        this.status = status;
     }
 
     public String toString() {
-        return Status;
+        return status;
     }
 
 }

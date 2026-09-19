@@ -37,7 +37,7 @@ public void plusButton(){
             System.out.println("ERROR");
             break;
     }
-    timer = TIME_DURATION; //reset the timer to 2 seconds
+    timer = TIME_DURATION; //reset the timer to 2 minutes
 
 }
 
@@ -45,7 +45,6 @@ public void minusButton()
 {
     switch (mySetting) {
         case OFF:
-            mySetting = Setting.OFF;
             break;
         case LOW:
             mySetting = Setting.OFF;
@@ -88,7 +87,7 @@ public void updateTemperature() {
                     break;
             }
 
-            if (myTemperature.ordinal() > target.ordinal()) {//ordinal returns the position of the enumn constant. kinda like index.
+            if (myTemperature.ordinal() > target.ordinal()) {//ordinal returns the position of the enum constant. kinda like index.
                 myTemperature = Temperature.values()[myTemperature.ordinal() - 1];
             } else if (myTemperature.ordinal() < target.ordinal()) {
                 myTemperature = Temperature.values()[myTemperature.ordinal() + 1];

@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Stove class. 
  *  
  * @author Sayal Gurung
- * @author Cyndi Rader
+ * @author Sophie Sengelman-Lipps
  * 
  * Purpose: Simulates a stove
  */
@@ -30,7 +30,18 @@ public class Stove {
 	 **** You must write the following method ****
 	 */
 	public void displayStove() {
-
+		boolean isHot = false;
+		
+		for (Burner burner : burners) {
+			burner.display();
+			if (burner.getMyTemperature() == Burner.Temperature.BLAZING) {
+				isHot = true;
+			}
+		}
+		
+		if (isHot) {
+			System.out.println("RED LIGHT - HOT BURNER ALERT"); //[cite: 1]
+		}
 	}
 	
 	/**
@@ -92,7 +103,7 @@ public class Stove {
 		Stove stove = new Stove();
 		
 		System.out.println("Beginning stove state ");
-		// trun the burners up
+		// turn the burners up
 		stove.displayStove();
 		stove.turnBurnersUp();
 		stove.timePassing(6);
